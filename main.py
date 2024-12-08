@@ -33,10 +33,10 @@ def login(_user, password):
     """
     登录
     """
-    url1 = "https://api-user.huami.com/registrations/+86" + _user + "/tokens"
-    _headers = {
+    url1 = "https://api-user.huami.com/registrations/" + _user + "/tokens"
+    headers = {
         "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-        "User-Agent": "MiFit/4.6.0 (iPhone; iOS 14.0.1; Scale/2.00)"
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_7_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2"
     }
     data1 = {
         "client_id": "HuaMi",
@@ -44,9 +44,9 @@ def login(_user, password):
         "redirect_uri": "https://s3-us-west-2.amazonaws.com/hm-registration/successsignin.html",
         "token": "access"
     }
-    r1 = requests.post(url1, data=data1, headers=_headers, allow_redirects=False)
+    r1 = requests.post(url1, data=data1, headers=headers, allow_redirects=False)
+    location = r1.headers["Location"]
     try:
-        location = r1.headers["Location"]
         code = get_code(location)
     except:
         return 0, 0
